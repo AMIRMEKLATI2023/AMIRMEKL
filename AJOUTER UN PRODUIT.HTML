@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&family=Permanent+Marker&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <title>AJOUTER UN PRODUIT</title>
+    <style>
+
+    body{
+        padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            background-color:#f4f1de;
+            color: rgb(0, 0, 0);
+    }
+    .crud{
+      width:80% ;
+      margin: auto;
+    }
+    .head{
+     text-align:center ;
+     text-transform: uppercase;
+     margin: 10px 0;
+    }
+    input{
+       width: 100%; 
+       height: 30px;
+       outline: none;
+       border: none;
+       background: #ffffff;
+       margin: 4px 0;
+       border-radius: 4px;
+       padding: 4px;
+       color: #000000;
+    }
+    input:focus{
+        background: #ffffff;
+        transform: scale(1.1);
+    }
+    .price input{
+        width: 18%;
+    }  
+    #total{
+        background: rgb(0, 149, 255);
+        padding: 5px 2px;
+        border-radius: 4px;
+    }
+    #total::before{
+        content: 'TOTAL:';
+        
+    }
+    button{
+        width: 100%;
+        height: 30px;
+        border: none;
+        cursor: pointer;
+        background: #0077ff;
+        border-radius: 20px;
+        transition: 0.5s;
+    }
+    #deleteall{
+       margin: 20px 0;
+    }
+    button:hover{
+        background: #004cfe;
+        letter-spacing: 1px;
+    }
+    .btnSearch{
+        display: flex;
+   justify-content: space-between;
+    }
+    .btnSearch button{
+       width: 45%;
+    }
+    table{
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+    table th{
+        text-transform: uppercase;
+
+    }
+    th,td{
+        padding: 5px;
+        
+    }
+    .exit{
+        background: none;
+        margin-left: 105%;
+        justify-content: right;
+        
+    }
+
+    </style>
+</head>
+<body>
+    <div class="crud">
+        <div class="head">
+            <a class="exit" href="COUNT SYSTEM FOR MED.HTML"><i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i></a>
+            <h2>PROGRAMME</h2>
+            <p>PRODUCT MANAGEMENT SYSTEM</p>
+        </div>
+
+
+        <div class="inputs">
+
+            <input placeholder="NOM DE PRODUIT..." type="text" id="title">
+            <div class="price">
+                <input onkeyup="getTotal()" type="number" id="price" placeholder="PRIX">
+                <input onkeyup="getTotal()" type="text" id="taxes" placeholder="LA MARQUE">
+                <label id="f" for="DATE">DATE (F)</label>
+                <input type="date" >
+                <label id="e" for="DATE ">DATE(E)</label>
+                <input type="date">
+                <small id="total"></small>
+            </div>
+            <input placeholder="COUNT" type="number" id="count">
+            <button id="submit">CREATE</button>
+        </div>
+           
+        <div class="outputs">
+          <div class="searchBlock">
+            <input type="text" id="search" placeholder="SEARCH">
+          <div class="btnSearch">
+            <button id="searchTitle">SEARCH BY TITLE</button>
+            <button id="searchTitle">SEARCH BY MARQUE</button>
+          </div>
+        </div>
+        <div id="deleteall"></div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NOM </th>
+        <th>PRIX</th>
+        <th>MARQUE</th>
+        <th>DATE DE FABRICATION</th>
+        <th>DATE D'EXPERATION</th>
+        <th>TOTAL</th>
+        <th>UPDATE</th>
+        <th>DELETE</th>
+    </tr>
+
+    <tbody id="tbody">
+      <!---->
+
+    
+       </tbody>
+   </table>
+</div>
+
+    </div>
+
+<script>
+    let titre = document.getElementById('titre');
+let price = document.getElementById('price');
+let taxes = document.getElementById('taxes');
+let ads = document.getElementById('f');
+let discount = document.getElementById('e');
+let total = document.getElementById('total');
+let count = document.getElementById('count');
+let sumbit = document.getElementById('sumbit');
+
+
+
+
+function getTotal()
+
+{
+    if (price.value != ''){
+        let result = (+price.value);
+          total.innerHTML= result;
+          total.style.background ='green';
+
+
+    }else{
+        total.innerHTML='';
+        total.style.background =' rgb(0, 149, 255)';
+    }
+
+
+
+
+}
+
+
+
+if(localStorage.product != null){
+    datapro = JSON.parse(localStorage.product)
+}else{
+    datapro = [];
+}
+
+
+
+
+
+submit.onclick = function(){
+    let newPro = {
+        title:title.value,
+        price:price.value,
+        taxes:taxes.value,
+        f:f.value,
+        e:e.value,
+        total:total.innerHTML,
+        count:count.value,
+        
+        
+        }
+        
+        if(newPro.count > 1){
+            for (let i = 0;i < newPro.count;i++){
+                datapro.push(newPro);
+            }
+        }else{
+            datapro.push(newPro);
+        }
+        
+
+
+
+        localStorage.setItem('product',    JSON.stringify(datapro)   )
+        console.log(datapro)
+        clearData()
+        showData()
+}
+
+
+function clearData(){
+    title.value ='';
+    price.value ='';
+    taxes.value ='';
+    ads.value ='';
+    discount.value ='';
+    total.innerHTML ='';
+   count.value ='';
+    title.value ='';
+    title.value ='';
+
+}
+
+
+function showData()
+{
+     let table ='';
+    for (let i = 0; i < datapro.length;i++){
+       table += ` 
+       <tr>
+        <td>${i}</td>
+        <td>${datapro[i].title}</td>
+        <td>${datapro[i].price}</td>
+        <td>${datapro[i].taxes}</td>
+        <td>${datapro[i].f}</td>
+        <td>${datapro[i].e}</td>
+        <td>${datapro[i].total}</td>
+        <td><button onclick='updateData(${i})' id="update">UPDATE</button></td>
+        <td><button onclick='deleteData( ${i}  )' id="delete">DELETE</button></td>
+        
+        `
+
+    }
+
+     document.getElementById('tbody').innerHTML  = table;
+     let btnDelete = document.getElementById('deleteall');
+     if(datapro.length > 0){
+         btnDelete.innerHTML =`
+         <button onclick='deletAll()'>DELET ALL (${datapro.length}) </button>
+         `
+     }else{
+        btnDelete.innerHTML ='';
+     }
+}
+showData()
+
+
+function deleteData(i)
+{
+datapro.splice(i,1);
+localStorage.product =JSON.stringify(datapro)
+showData()
+
+}
+
+function deletAll(){
+    localStorage.clear
+    datapro.splice(0)
+    showData()
+}
+
+function updateData(i){
+    title.value = datapro[i].title;
+    price.value = datapro[i].price;
+    taxes.value = datapro[i].taxes;
+    ads.value = datapro[i].ads;
+    discount.value = datapro[i].discount;
+    category.value = datapro[i].category;
+    getTotal()
+    count.style.display = 'none';
+    category.value = datapro[i].category;
+    submit.innerHTML ='UPDATE';
+     let mode = ''
+}
+
+
+
+</script>
+</body>
+</html>
